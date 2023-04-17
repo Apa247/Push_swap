@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 09:39:13 by daparici          #+#    #+#             */
-/*   Updated: 2022/06/23 13:36:59 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/17 12:10:50 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int	ft_atoi(char *str)
 {
 	unsigned long long int		valor;
 	int							signo;

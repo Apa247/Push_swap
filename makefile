@@ -6,7 +6,7 @@
 #    By: daparici <daparici@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/25 15:52:59 by daparici          #+#    #+#              #
-#    Updated: 2023/03/25 20:13:09 by daparici         ###   ########.fr        #
+#    Updated: 2023/04/17 12:19:05 by daparici         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ all: $(NAME)
 clean:
 	$(RM) $(OBJS)
 fclean: clean
-	$(RM) $(NAME) 
+	$(RM) $(NAME)
+	make fclean -C ./Libft;
+	make fclean -C ./printf;
 re: clean all
 .PHONY: bonus all clean fclean re

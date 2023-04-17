@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:31:57 by daparici          #+#    #+#             */
-/*   Updated: 2022/09/20 13:10:17 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/17 12:11:05 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_strncmp(const char *str1, const char *str2, size_t n);
 void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-int		ft_atoi(const char *str);
+int		ft_atoi(char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
