@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/17 13:25:17 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:27:15 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,17 +105,35 @@ char	**ft_check_arg(int ag, char **ar)
 
 void	innit_stack(t_stack **stack_a, char **list)
 {
-	t_stack *new;
+	t_stack	*new;
+	t_stack	**swap;
 	int		i;
 
 	i = 0;
+	swap = stack_a;
 	while (list[i])
 	{
-		new = ft_lstnew(ft_atoi(list[i]);
-		ft_lstadd_back(stack_a, new);
+		new = ft_lstnew_p(ft_atoi(list[i]));
+		ft_lstadd_back_p(stack_a, new);
+		stack_a = swap;
+		get_index_stack(stack_a, new);
+		printf("%i\n", new->index);
 		i++;
 	}
-	
+}
+
+void	get_index_stack(t_stack **stack_a, t_stack *new)
+{
+	printf("hola\n");
+	while ((*stack_a)->next)
+	{
+		if ((*stack_a)->value > new->value)
+			(*stack_a)->index++;
+		if ((*stack_a)->value < new->value)
+			new->index++;
+		(*stack_a) = (*stack_a)->next;
+	}
+	printf("%i\n", new->index);
 }
 
 int	main(int ag, char **ar)

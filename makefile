@@ -6,7 +6,7 @@
 #    By: daparici <daparici@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/25 15:52:59 by daparici          #+#    #+#              #
-#    Updated: 2023/04/17 12:19:05 by daparici         ###   ########.fr        #
+#    Updated: 2023/04/18 11:59:52 by daparici         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address -g3
 AR = ar rcs
 
-SRC = main.c
+SRC = main.c utils.c
 
 OBJS = ${SRC:.c=.o}
 

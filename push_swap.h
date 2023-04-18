@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/17 13:17:26 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:24:55 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_stack
 {
 	int				value;
 	int				index;
-	struct s_list	*next;
+	struct s_stack	*next;
 }				t_stack;
 
 size_t	ft_strlen_m(const char **str);
@@ -38,5 +38,8 @@ char	**ft_check_arg(int ag, char **ar);
 void	ft_check_list(char **list, size_t i);
 int		ft_repet_nb(char **list);
 void	msg_error(char *str);
-
+t_stack	*ft_lstnew_p(int content);
+void	ft_lstadd_back_p(t_stack **lst, t_stack *new);
+t_stack	*ft_lstlast_p(t_stack *lst);
+void	get_index_stack(t_stack **stack_a, t_stack *new);
 #endif
