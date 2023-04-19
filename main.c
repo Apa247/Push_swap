@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/18 13:27:15 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:13:11 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	ft_check_list(char **list, size_t i)
 	{
 		nb = ft_atoi(list[i]);
 		if (!ft_check_is_number(list[i]))
-			msg_error("Error, the parameters must be numbers");
+			msg_error("Error\nThe parameters must be numbers");
 		if (nb < -2147483648 || nb > 2147483647)
-			msg_error("Error, the numbers must be type int");
+			msg_error("Error\nThe numbers must be type int");
 		i++;
 	}
 	if (i == 1)
@@ -99,56 +99,102 @@ char	**ft_check_arg(int ag, char **ar)
 	}
 	ft_check_list(list, i);
 	if (!ft_repet_nb(list))
-		msg_error("Error, repeating numbers");
+		msg_error("Error\nRepeating numbers");
 	return (list);
 }
 
-void	innit_stack(t_stack **stack_a, char **list)
+void	innit_stack(t_stack **stack_a, t_stack **stack_b, char **list)
 {
 	t_stack	*new;
-	t_stack	**swap;
 	int		i;
 
 	i = 0;
-	swap = stack_a;
 	while (list[i])
 	{
+		//printf("%s\n", list[i]);
 		new = ft_lstnew_p(ft_atoi(list[i]));
 		ft_lstadd_back_p(stack_a, new);
-		stack_a = swap;
-		get_index_stack(stack_a, new);
-		printf("%i\n", new->index);
+		get_index_stack((*stack_a), new);
 		i++;
 	}
+	rotate(stack_a);
+	push(stack_a, stack_b);
+	ft_lstlast_p_2((*stack_a));
+	printf("hola\n");
+	ft_lstlast_p_2((*stack_b));
 }
 
-void	get_index_stack(t_stack **stack_a, t_stack *new)
+void	get_index_stack(t_stack *stack_a, t_stack *new)
 {
-	printf("hola\n");
-	while ((*stack_a)->next)
+	while (stack_a->next)
 	{
-		if ((*stack_a)->value > new->value)
-			(*stack_a)->index++;
-		if ((*stack_a)->value < new->value)
+		if (stack_a->value > new->value)
+			stack_a->index++;
+		if (stack_a->value < new->value)
 			new->index++;
-		(*stack_a) = (*stack_a)->next;
+		stack_a = stack_a->next;
 	}
-	printf("%i\n", new->index);
+	// printf("%i", new->value);
+	// printf("-%i-\n", new->index);
 }
 
 int	main(int ag, char **ar)
 {
 	char	**list;
-	t_stack	**stack_a;
-	t_stack	**stack_b;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
 
 	if (ag <= 1)
-		msg_error("Invalid number of parameters");
+		msg_error("Error\nInvalid number of parameters");
 	list = ft_check_arg(ag, ar);
-	stack_a = (t_stack **)malloc(sizeof(t_stack));
-	stack_b = (t_stack **)malloc(sizeof(t_stack));
-	*stack_a = NULL;
-	*stack_b = NULL;
-	innit_stack(stack_a, list);
+	stack_a = (t_stack *)malloc(sizeof(t_stack));
+	stack_b = (t_stack *)malloc(sizeof(t_stack));
+	stack_a = NULL;
+	stack_b = NULL;
+	innit_stack(&stack_a, &stack_b, list);
 	return (0);
+}
+
+void	swap(t_stack **stack)
+{
+	t_stack	*first;
+	t_stack	*second;
+	int		tmp_value;
+	int		tmp_index;
+
+	first = (*stack);
+	second = first->next;
+	tmp_value = first->value;
+	tmp_index = first->index;
+	first->value = second->value;
+	first->index = second->index;
+	second->value = tmp_value;
+	second->index = tmp_index;
+}
+
+void	push(t_stack **stack_from, t_stack **stack_to)
+{
+	t_stack	*tmp;
+
+	tmp = (*stack_from);
+	(*stack_from) = (*stack_from)->next;
+	if (!(*stack_to))
+	{
+		(*stack_to) = tmp;
+		tmp->next = NULL;
+	}
+	else
+	{
+		tmp->next = (*stack_to);
+		(*stack_to) = tmp;
+	}
+}
+
+void	rotate(t_stack **stack)
+{
+	t_stack	*old_first;
+
+	old_first = (*stack);
+	*stack = (*stack)->next;
+	ft_lstadd_back_p(stack, old_first);
 }
