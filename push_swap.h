@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/19 13:03:56 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/23 22:30:23 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,34 @@ int		ft_check_number(char *str);
 char	**ft_check_arg(int ag, char **ar);
 void	ft_check_list(char **list, size_t i);
 int		ft_repet_nb(char **list);
-void	msg_error(char *str);
+void	get_index_stack(t_stack *stack_a, t_stack *new);
+// funciones de movimientos
+void	swap(t_stack **stack);
+void	rotate(t_stack **stack);
+void	push(t_stack **stack_from, t_stack **stack_to);
+void	reverse_rotate(t_stack **stack);
+
+void	sa(t_stack **stack_a);
+void	sb(t_stack **stack_b);
+void	ss(t_stack **stack_a, t_stack **stack_b);
+
+void	pa(t_stack **stack_a, t_stack **stack_b);
+void	pb(t_stack **stack_b, t_stack **stack_b);
+
+void	ra(t_stack **stack_a);
+void	rb(t_stack **stack_b);
+void	rr(t_stack **stack_a, t_stack stack_b);
+
+void	rra(t_stack **stack_a);
+void	rrb(t_stack **stack_b);
+void	rrr(t_stack **stack_a, t_stack **stack_b);
+
+// funciones utiles de libft
 t_stack	*ft_lstnew_p(int content);
 void	ft_lstadd_back_p(t_stack **lst, t_stack *new);
 t_stack	*ft_lstlast_p(t_stack *lst);
-void	get_index_stack(t_stack *stack_a, t_stack *new);
 void	ft_lstlast_p_2(t_stack *lst);
-void	rotate(t_stack **stack);
-void	push(t_stack **stack_from, t_stack **stack_to);
+t_stack	*ft_lstpenultimate(t_stack *lst);
+// funcion de error
+void	msg_error(char *str);
 #endif
