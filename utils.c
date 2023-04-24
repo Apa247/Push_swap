@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:54:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/23 21:49:48 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:07:49 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	ft_lstadd_back_p(t_stack **lst, t_stack *new)
 
 t_stack	*ft_lstlast_p(t_stack *lst)
 {
-	
 	if (lst)
 	{
 		while (lst->next)
@@ -64,8 +63,9 @@ void	ft_lstlast_p_2(t_stack *lst)
 
 t_stack	*ft_lstpenultimate(t_stack *lst)
 {
-	t_stack *tmp;
+	t_stack	*tmp;
 
+	tmp = NULL;
 	if (lst)
 	{
 		while (lst->next)

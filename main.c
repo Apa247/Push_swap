@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/23 18:19:46 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:10:33 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,19 @@ void	innit_stack(t_stack **stack_a, t_stack **stack_b, char **list)
 	i = 0;
 	while (list[i])
 	{
-		//printf("%s\n", list[i]);
 		new = ft_lstnew_p(ft_atoi(list[i]));
 		ft_lstadd_back_p(stack_a, new);
 		get_index_stack((*stack_a), new);
 		i++;
 	}
-	rotate(stack_a);
-	push(stack_a, stack_b);
-	ft_lstlast_p_2((*stack_a));
-	printf("hola\n");
-	ft_lstlast_p_2((*stack_b));
+	// sa(stack_a);
+	// pb(stack_a, stack_b);
+	// pb(stack_a, stack_b);
+	// rrr(stack_a, stack_b);
+	// rr(stack_a, stack_b);
+	// ft_lstlast_p_2((*stack_a));
+	// printf("hola\n");
+	// ft_lstlast_p_2((*stack_b));
 }
 
 void	get_index_stack(t_stack *stack_a, t_stack *new)
@@ -79,5 +81,23 @@ int	main(int ag, char **ar)
 	stack_a = NULL;
 	stack_b = NULL;
 	innit_stack(&stack_a, &stack_b, list);
+	
 	return (0);
 }
+
+void	sort_list(t_stack **stack_a, t_stack **stack_b)
+{
+	if (ft_lstsize(*stack_a) <= 3)
+		sort_3(stack_a, stack_b);
+	if (ft_lstsize(*stack_a) > 3 && ft_lstsize(*stack_a) <= 5)
+		sort_5(stack_a, stack_b);
+	else
+		
+}
+
+void	sort_3(t_stack **stack_a, t_stack **stack_b)
+{
+	
+}
+
+void	radix_sort

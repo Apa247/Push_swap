@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:19:19 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/23 22:31:55 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/24 11:45:47 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	rb(t_stack **stack_b)
 	ft_putendl_fd("rb", 1);
 }
 
-void	rr(t_stack **stack_a, t_stack stack_b)
+void	rr(t_stack **stack_a, t_stack **stack_b)
 {
 	rotate(stack_a);
 	rotate(stack_b);
