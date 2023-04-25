@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/24 13:10:33 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:58:12 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	msg_error(char *str)
 	exit (1);
 }
 
-void	innit_stack(t_stack **stack_a, t_stack **stack_b, char **list)
+void	innit_stack(t_stack **stack_a, char **list)
 {
 	t_stack	*new;
 	int		i;
@@ -80,24 +80,107 @@ int	main(int ag, char **ar)
 	stack_b = (t_stack *)malloc(sizeof(t_stack));
 	stack_a = NULL;
 	stack_b = NULL;
-	innit_stack(&stack_a, &stack_b, list);
-	
+	innit_stack(&stack_a, list);
+	if (is_sort(&(*stack_a)))
+		return (0);
+	sort_list(&stack_a, &stack_b);
 	return (0);
 }
 
 void	sort_list(t_stack **stack_a, t_stack **stack_b)
 {
-	if (ft_lstsize(*stack_a) <= 3)
-		sort_3(stack_a, stack_b);
-	if (ft_lstsize(*stack_a) > 3 && ft_lstsize(*stack_a) <= 5)
-		sort_5(stack_a, stack_b);
-	else
-		
+	if (ft_lstsize_p(*stack_a) <= 3)
+		sort_3(stack_a);
+	if (ft_lstsize_p(*stack_a) == 4)
+		sort_4(stack_a, stack_b);
+	// if (ft_lstsize_p(*stack_a) == 5)
+	// 	sort_5(stack_a, stack_b);
+	if (is_sort(*stack_a))
+		exit(0);
 }
 
-void	sort_3(t_stack **stack_a, t_stack **stack_b)
+void	sort_3(t_stack **stack_a)
 {
-	
+	if ((*stack_a)->index < (*stack_a)->next->index && (*stack_a)->next->index
+		> (*stack_a)->next->next->index)
+	{
+		sa(stack_a);
+		ra(stack_a);
+	}
+	if ((*stack_a)->index > (*stack_a)->next->index && (*stack_a)->index
+		< (*stack_a)->next->next->index)
+		sa(stack_a);
+	if ((*stack_a)->index < (*stack_a)->next->index && (*stack_a)->index
+		> (*stack_a)->next->next->index)
+		rra(stack_a);
+	if ((*stack_a)->index > (*stack_a)->next->index
+		&& (*stack_a)->next->index > (*stack_a)->next->next->index)
+	{
+		sa(stack_a);
+		rra(stack_a);
+	}
+	if ((*stack_a)->index > (*stack_a)->next->index
+		&& (*stack_a)->next->index < (*stack_a)->next->next->index)
+	{	
+		ra(stack_a);
+	}
+	ft_lstlast_p_2(*stack_a);
 }
 
-void	radix_sort
+void sort_4(t_stack **stack_a, t_stack **stack_b)
+{
+	int	distance;
+
+	distance = distance_index((*stack_a), 1);
+	// while (distance != 0 && distance <3)
+	// {
+	// 	ra(stack_a);
+	// 	distance--;
+	// }
+	if (distance == 1)
+		ra(stack_a);
+	if (distance == 2)
+	{
+		ra(stack_a);
+		ra(stack_a);
+	}
+	if (distance == 3)
+		rra(stack_a);
+	// if (is_sort(*stack_a))
+	// 	exit(1);
+	pb(stack_a, stack_b);
+	//ft_lstlast_p_2(*stack_a);
+	sort_3(stack_a);
+	pa(stack_a, stack_b);
+}
+
+int	distance_index(t_stack *stack_a, int index)
+{
+	int	distance;
+
+	distance = 0;
+	while (stack_a)
+	{
+		if (stack_a->index == index)
+			return (distance);
+		distance++;
+		stack_a = stack_a->next;
+	}
+	return (-1);
+}
+
+int	is_sort(t_stack *stack_a)
+{
+	while (stack_a->next)
+	{
+		if (stack_a->index > stack_a->next->index)
+			return (0);
+		stack_a = stack_a->next;
+	}
+	return (1);
+}
+
+// void	sort_5(t_stack **stack_a, t_stack **stack_b)
+// {
+	
+// }

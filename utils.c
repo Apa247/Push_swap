@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:54:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/24 13:07:49 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:05:23 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,17 @@ t_stack	*ft_lstpenultimate(t_stack *lst)
 		}
 	}
 	return (tmp);
+}
+
+int	ft_lstsize_p(t_stack *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst -> next;
+		i++;
+	}
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/24 11:46:11 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:24:39 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_stack
 size_t	ft_strlen_m(const char **str);
 
 int		main(int ag, char **ar);
-void	innit_stack(t_stack **stack_a, t_stack **stack_b, char **list);
+void	innit_stack(t_stack **stack_a, char **list);
 int		ft_check_number(char *str);
 char	**ft_check_arg(int ag, char **ar);
 void	ft_check_list(char **list, size_t i);
@@ -62,10 +62,18 @@ void	rrr(t_stack **stack_a, t_stack **stack_b);
 
 // funciones utiles de libft
 t_stack	*ft_lstnew_p(int content);
+int		ft_lstsize_p(t_stack *lst);
 void	ft_lstadd_back_p(t_stack **lst, t_stack *new);
 t_stack	*ft_lstlast_p(t_stack *lst);
 void	ft_lstlast_p_2(t_stack *lst);
 t_stack	*ft_lstpenultimate(t_stack *lst);
 // funcion de error
 void	msg_error(char *str);
+
+// funciones de algoritmo
+int		is_sort(t_stack *stack_a);
+int	distance_index(t_stack *stack_a, int index);
+void	sort_list(t_stack **stack_a, t_stack **stack_b);
+void	sort_3(t_stack **stack_a);
+void	sort_4(t_stack **stack_a, t_stack **stack_b);
 #endif
