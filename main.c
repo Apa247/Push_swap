@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/25 12:58:12 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:10:04 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	innit_stack(t_stack **stack_a, char **list)
 	// rr(stack_a, stack_b);
 	// ft_lstlast_p_2((*stack_a));
 	// printf("hola\n");
-	// ft_lstlast_p_2((*stack_b));
+	//ft_lstlast_p_2((*stack_a));
 }
 
 void	get_index_stack(t_stack *stack_a, t_stack *new)
@@ -67,7 +67,7 @@ void	get_index_stack(t_stack *stack_a, t_stack *new)
 	// printf("-%i-\n", new->index);
 }
 
-int	main(int ag, char **ar)
+int	main(int ag, char *ar[])
 {
 	char	**list;
 	t_stack	*stack_a;
@@ -76,6 +76,8 @@ int	main(int ag, char **ar)
 	if (ag <= 1)
 		msg_error("Error\nInvalid number of parameters");
 	list = ft_check_arg(ag, ar);
+	if (!list)
+		return (0);
 	stack_a = (t_stack *)malloc(sizeof(t_stack));
 	stack_b = (t_stack *)malloc(sizeof(t_stack));
 	stack_a = NULL;
@@ -89,12 +91,16 @@ int	main(int ag, char **ar)
 
 void	sort_list(t_stack **stack_a, t_stack **stack_b)
 {
-	if (ft_lstsize_p(*stack_a) <= 3)
+	//ft_lstlast_p_2(*stack_a);
+	if (ft_lstsize_p(*stack_a) == 2)
+		ra(stack_a);
+	if (ft_lstsize_p(*stack_a) == 3)
 		sort_3(stack_a);
 	if (ft_lstsize_p(*stack_a) == 4)
-		sort_4(stack_a, stack_b);
-	// if (ft_lstsize_p(*stack_a) == 5)
-	// 	sort_5(stack_a, stack_b);
+		sort_4(stack_a, stack_b, 1);
+	if (ft_lstsize_p(*stack_a) == 5)
+		sort_5(stack_a, stack_b);
+	//ft_lstlast_p_2(*stack_a);
 	if (is_sort(*stack_a))
 		exit(0);
 }
@@ -124,19 +130,14 @@ void	sort_3(t_stack **stack_a)
 	{	
 		ra(stack_a);
 	}
-	ft_lstlast_p_2(*stack_a);
+	//ft_lstlast_p_2(*stack_a);
 }
 
-void sort_4(t_stack **stack_a, t_stack **stack_b)
+void sort_4(t_stack **stack_a, t_stack **stack_b, int index)
 {
 	int	distance;
 
-	distance = distance_index((*stack_a), 1);
-	// while (distance != 0 && distance <3)
-	// {
-	// 	ra(stack_a);
-	// 	distance--;
-	// }
+	distance = distance_index((*stack_a), index);
 	if (distance == 1)
 		ra(stack_a);
 	if (distance == 2)
@@ -146,10 +147,7 @@ void sort_4(t_stack **stack_a, t_stack **stack_b)
 	}
 	if (distance == 3)
 		rra(stack_a);
-	// if (is_sort(*stack_a))
-	// 	exit(1);
 	pb(stack_a, stack_b);
-	//ft_lstlast_p_2(*stack_a);
 	sort_3(stack_a);
 	pa(stack_a, stack_b);
 }
@@ -180,7 +178,25 @@ int	is_sort(t_stack *stack_a)
 	return (1);
 }
 
-// void	sort_5(t_stack **stack_a, t_stack **stack_b)
-// {
-	
-// }
+void	sort_5(t_stack **stack_a, t_stack **stack_b)
+{
+	int	dt_to_first;
+	int	tmp;
+
+	dt_to_first = distance_index((*stack_a), 1);
+	tmp = dt_to_first;
+	while (tmp > 0 && tmp < 3)
+	{
+		ra(stack_a);
+		tmp--;
+	}
+	//ft_lstlast_p_2(*stack_a);
+	while (dt_to_first > 2 && dt_to_first < 5)
+	{
+		rra(stack_a);
+		dt_to_first++;
+	}
+	pb(stack_a, stack_b);
+	sort_4(stack_a, stack_b, 2);
+	pa(stack_a, stack_b);
+}

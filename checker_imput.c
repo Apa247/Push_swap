@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:16:46 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/23 18:18:12 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:11:12 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ char	**ft_check_arg(int ag, char **ar)
 
 	i = 0;
 	if (ag == 2)
+	{
 		list = ft_split(ar[1], ' ');
+		if (!list[1])
+			return (0);
+	}
 	if (ag > 2)
 	{
 		list = ar;
@@ -82,5 +86,9 @@ char	**ft_check_arg(int ag, char **ar)
 	ft_check_list(list, i);
 	if (!ft_repet_nb(list))
 		msg_error("Error\nRepeating numbers");
-	return (list);
+	if (ag > 2)
+		return (list + 1);
+	if (ag == 2)
+		return (list);
+	return (0);
 }

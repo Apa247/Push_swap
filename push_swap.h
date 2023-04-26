@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/25 12:24:39 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:47:02 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ void	msg_error(char *str);
 
 // funciones de algoritmo
 int		is_sort(t_stack *stack_a);
-int	distance_index(t_stack *stack_a, int index);
+int		distance_index(t_stack *stack_a, int index);
 void	sort_list(t_stack **stack_a, t_stack **stack_b);
 void	sort_3(t_stack **stack_a);
-void	sort_4(t_stack **stack_a, t_stack **stack_b);
+void	sort_4(t_stack **stack_a, t_stack **stack_b, int index);
+void	sort_5(t_stack **stack_a, t_stack **stack_b);
 #endif
