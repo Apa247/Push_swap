@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:16:46 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/26 13:11:12 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:52:51 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,46 +49,12 @@ int	ft_check_is_number(char *str)
 	return (1);
 }
 
-void	ft_check_list(char **list, size_t i)
+int	ft_check_arg(char **tmp, int k)
 {
 	long	nb;
 
-	while (list[i])
-	{
-		nb = ft_atoi(list[i]);
-		if (!ft_check_is_number(list[i]))
-			msg_error("Error\nThe parameters must be numbers");
-		if (nb < -2147483648 || nb > 2147483647)
-			msg_error("Error\nThe numbers must be type int");
-		i++;
-	}
-	if (i == 1)
-		ft_printf("%s\n", list[i]);
-}
-
-char	**ft_check_arg(int ag, char **ar)
-{
-	char	**list;
-	size_t	i;
-
-	i = 0;
-	if (ag == 2)
-	{
-		list = ft_split(ar[1], ' ');
-		if (!list[1])
-			return (0);
-	}
-	if (ag > 2)
-	{
-		list = ar;
-		i = 1;
-	}
-	ft_check_list(list, i);
-	if (!ft_repet_nb(list))
-		msg_error("Error\nRepeating numbers");
-	if (ag > 2)
-		return (list + 1);
-	if (ag == 2)
-		return (list);
-	return (0);
+	if (!ft_check_is_number(tmp[k]))
+		msg_error("Error\n");
+	nb = ft_atoi_p(tmp[k]);
+	return (nb);
 }

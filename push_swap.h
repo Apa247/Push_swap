@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/26 12:47:02 by daparici         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:49:50 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ typedef struct s_stack
 size_t	ft_strlen_m(const char **str);
 
 int		main(int ag, char **ar);
-void	innit_stack(t_stack **stack_a, char **list);
+void	innit_stack(t_stack **stack_a, char **s_list);
+int		ft_check_is_number(char *str);
 int		ft_check_number(char *str);
-char	**ft_check_arg(int ag, char **ar);
+int		ft_check_arg(char **tmp, int k);
 void	ft_check_list(char **list, size_t i);
 int		ft_repet_nb(char **list);
 void	get_index_stack(t_stack *stack_a, t_stack *new);
@@ -67,8 +68,10 @@ void	ft_lstadd_back_p(t_stack **lst, t_stack *new);
 t_stack	*ft_lstlast_p(t_stack *lst);
 void	ft_lstlast_p_2(t_stack *lst);
 t_stack	*ft_lstpenultimate(t_stack *lst);
+int		ft_atoi_p(char *str);
 // funcion de error
 void	msg_error(char *str);
+void	free_stack(char **stack_a);
 
 // funciones de algoritmo
 int		is_sort(t_stack *stack_a);
