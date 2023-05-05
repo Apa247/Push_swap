@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/27 12:49:50 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:13:21 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,7 @@ void	sort_list(t_stack **stack_a, t_stack **stack_b);
 void	sort_3(t_stack **stack_a);
 void	sort_4(t_stack **stack_a, t_stack **stack_b, int index);
 void	sort_5(t_stack **stack_a, t_stack **stack_b);
+void	sort_100(t_stack **stack_a, t_stack **stack_b);
+int		find_frag_first(t_stack *stack_a, int frag);
+int		find_frag_second(t_stack *stack_a, int frag);
 #endif

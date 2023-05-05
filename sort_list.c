@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/27 11:24:04 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:30:27 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	sort_list(t_stack **stack_a, t_stack **stack_b)
 {
-	//ft_lstlast_p_2(*stack_a);
 	if (ft_lstsize_p(*stack_a) == 2)
 		ra(stack_a);
-	if (ft_lstsize_p(*stack_a) == 3)
+	else if (ft_lstsize_p(*stack_a) == 3)
 		sort_3(stack_a);
-	if (ft_lstsize_p(*stack_a) == 4)
+	else if (ft_lstsize_p(*stack_a) == 4)
 		sort_4(stack_a, stack_b, 1);
-	if (ft_lstsize_p(*stack_a) == 5)
+	else if (ft_lstsize_p(*stack_a) == 5)
 		sort_5(stack_a, stack_b);
-	//ft_lstlast_p_2(*stack_a);
+	else if (ft_lstsize_p(*stack_a) > 5 && ft_lstsize_p(*stack_a) < 100)
+		sort_100(stack_a, stack_b);
 	if (is_sort(*stack_a))
 		exit(0);
 }
@@ -31,29 +31,30 @@ void	sort_list(t_stack **stack_a, t_stack **stack_b)
 void	sort_3(t_stack **stack_a)
 {
 	if ((*stack_a)->index < (*stack_a)->next->index && (*stack_a)->next->index
-		> (*stack_a)->next->next->index)
+		> (*stack_a)->next->next->index && (*stack_a)->index
+		< (*stack_a)->next->next->index)
 	{
 		sa(stack_a);
 		ra(stack_a);
 	}
-	if ((*stack_a)->index > (*stack_a)->next->index && (*stack_a)->index
+	else if ((*stack_a)->index > (*stack_a)->next->index && (*stack_a)->index
 		< (*stack_a)->next->next->index)
 		sa(stack_a);
-	if ((*stack_a)->index < (*stack_a)->next->index && (*stack_a)->index
-		> (*stack_a)->next->next->index)
+	else if ((*stack_a)->index < (*stack_a)->next->index && (*stack_a)->index
+		> (*stack_a)->next->next->index && (*stack_a)->next->index
+		> (*stack_a)->next->next->index) 
 		rra(stack_a);
-	if ((*stack_a)->index > (*stack_a)->next->index
+	else if ((*stack_a)->index > (*stack_a)->next->index
 		&& (*stack_a)->next->index > (*stack_a)->next->next->index)
 	{
 		sa(stack_a);
 		rra(stack_a);
 	}
-	if ((*stack_a)->index > (*stack_a)->next->index
+	else if ((*stack_a)->index > (*stack_a)->next->index
 		&& (*stack_a)->next->index < (*stack_a)->next->next->index)
 	{	
 		ra(stack_a);
 	}
-	//ft_lstlast_p_2(*stack_a);
 }
 
 void sort_4(t_stack **stack_a, t_stack **stack_b, int index)
@@ -113,7 +114,6 @@ void	sort_5(t_stack **stack_a, t_stack **stack_b)
 		ra(stack_a);
 		tmp--;
 	}
-	//ft_lstlast_p_2(*stack_a);
 	while (dt_to_first > 2 && dt_to_first < 5)
 	{
 		rra(stack_a);
@@ -122,4 +122,63 @@ void	sort_5(t_stack **stack_a, t_stack **stack_b)
 	pb(stack_a, stack_b);
 	sort_4(stack_a, stack_b, 2);
 	pa(stack_a, stack_b);
+}
+
+void	sort_100(t_stack **stack_a, t_stack **stack_b)
+{
+	int frag;
+	int first;
+	int second;
+
+	frag = 20;
+	if (stack_b)
+		frag = 20;
+	while (find_frag_first((*stack_a), frag) >= 0 && frag <= 100)
+	{
+		first = find_frag_first((*stack_a), frag);
+		second = find_frag_second((*stack_a), frag);
+		// printf("first-%i\n", first);
+		// printf("second-%i\n", second);
+		// break;
+	}
+}
+
+int	find_frag_first(t_stack *stack_a, int frag)
+{
+	int distance;
+
+	distance = 1;
+	while (stack_a)
+	{
+		if (stack_a->index < frag && stack_a->index > frag - 20)
+			return (distance);
+		distance++;
+		stack_a = stack_a->next;
+	}
+	return (-1);
+}
+
+int	find_frag_second(t_stack *stack_a, int frag)
+{
+	t_stack	*tmp;
+	int		tmp_distance;
+	int		distance;
+	
+	distance = 1;
+	tmp_distance = 1;
+	tmp = stack_a;
+	while (stack_a->next)
+	{
+		if (stack_a->next->index < frag && stack_a->next->index > frag - 20)
+		{
+			tmp = stack_a;
+			distance = tmp_distance + 1;
+		}
+		tmp_distance++;
+		stack_a = stack_a->next;
+	}
+	if (tmp->index < frag && tmp->index > frag - 20)
+		return (distance);
+	else 
+		return (-1);
 }
