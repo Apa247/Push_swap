@@ -6,34 +6,20 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:16:46 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/27 12:52:51 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:20:38 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_repet_nb(char **list)
+void	ft_repet_nb(t_stack *list, long cmp)
 {
-	int	i;
-	int	k;
-	int	nb;
-	int	tmp;
-
-	i = 0;
-	while (list[i])
+	while (list)
 	{
-		k = i + 1;
-		while (list[k])
-		{
-			nb = ft_atoi(list[i]);
-			tmp = ft_atoi(list[k]);
-			if (nb == tmp)
-				return (0);
-			k++;
-		}
-		i++;
+		if (list->value == cmp)
+			msg_error("Error\n");
+		list = list->next;
 	}
-	return (1);
 }
 
 int	ft_check_is_number(char *str)

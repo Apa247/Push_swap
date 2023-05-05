@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/04/27 12:58:51 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:22:50 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,24 @@ void	innit_stack(t_stack **stack_a, char **list)
 	long	nb;
 	char	**tmp;
 
-	i = 1;
-	while (list[i])
+	i = 0;
+	while (list[++i])
 	{
-		k = 0;
+		k = -1;
 		if (list[i][0] == '\0')
 			exit(1);
 		tmp = ft_split(list[i], 32);
-		while (tmp[k])
+		while (tmp[++k])
 		{
 			nb = ft_check_arg(tmp, k);
+			ft_repet_nb((*stack_a), nb);
 			new = ft_lstnew_p(nb);
 			ft_lstadd_back_p(stack_a, new);
 			get_index_stack((*stack_a), new);
-			k++;
 		}
 		free_stack(tmp);
-		i++;
 	}
 	free(tmp);
-	//ft_lstlast_p_2((*stack_a));
 }
 
 void	free_stack(char **stack_a)
@@ -79,8 +77,6 @@ void	get_index_stack(t_stack *stack_a, t_stack *new)
 			new->index++;
 		stack_a = stack_a->next;
 	}
-	// printf("%i", new->value);
-	// printf("-%i-\n", new->index);
 }
 
 int	main(int ag, char *ar[])

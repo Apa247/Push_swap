@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/03 12:13:21 by davidaparic      ###   ########.fr       */
+/*   Updated: 2023/05/05 11:21:22 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_check_is_number(char *str);
 int		ft_check_number(char *str);
 int		ft_check_arg(char **tmp, int k);
 void	ft_check_list(char **list, size_t i);
-int		ft_repet_nb(char **list);
+void	ft_repet_nb(t_stack *list, long cmp);
 void	get_index_stack(t_stack *stack_a, t_stack *new);
 // funciones de movimientos
 void	swap(t_stack **stack);
