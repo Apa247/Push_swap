@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/05 12:56:33 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/06 02:29:29 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,23 +127,25 @@ void	sort_5(t_stack **stack_a, t_stack **stack_b)
 void	sort_100(t_stack **stack_a, t_stack **stack_b)
 {
 	int	frag;
-	int	first;
-	int	second;
+	int	d_up;
+	int	d_down;
 
 	frag = 20;
 	if (stack_b)
 		frag = 20;
-	//ft_lstlast_p_2(*stack_a);
 	while (find_frag_first((*stack_a), frag) >= 0 && frag <= 100)
 	{
-		first = find_frag_first((*stack_a), frag);
-		second = find_frag_second((*stack_a), frag);
-		if (first == -1 || second == -1)
-			msg_error("Error in first or Second\n");
-		if (first - 1 )
-		printf("first-%i\n", first);
-		printf("second-%i\n", second);
-		frag += 20;
+		d_up = find_frag_first((*stack_a), frag);
+		d_down = find_frag_second((*stack_a), frag);
+		printf("first-%i\n", d_up);
+		printf("second-%i\n", d_down);
+		if (d_up <= d_down)
+			ft_rotate_up(stack_a, d_up);
+		else if (d_down < d_up)
+			ft_reverse_rotate_down(stack_a, d_down);
+		ft_lstlast_p_2(*stack_a);
+		if (find_frag_first((*stack_a), frag) < 0)
+			frag += 20;
 	}
 }
 
@@ -151,7 +153,7 @@ int	find_frag_first(t_stack *stack_a, int frag)
 {
 	int	distance;
 
-	distance = 1;
+	distance = 0;
 	while (stack_a)
 	{
 		if (stack_a->index < frag && stack_a->index >= frag - 20)
@@ -167,7 +169,9 @@ int	find_frag_second(t_stack *stack_a, int frag)
 	t_stack	*tmp;
 	int		tmp_distance;
 	int		distance;
+	int		size;
 
+	size = ft_lstsize_p(stack_a);
 	distance = 1;
 	tmp_distance = 1;
 	tmp = stack_a;
@@ -184,7 +188,25 @@ int	find_frag_second(t_stack *stack_a, int frag)
 	}
 	//printf("distance- %i\n", distance);
 	if (tmp->index < frag && tmp->index >= frag - 20)
-		return (distance);
+		return (size - distance + 1);
 	else
 		return (-1);
+}
+
+void	ft_rotate_up(t_stack **stack_a, int distance)
+{
+	while (distance > 0)
+	{
+		ra(stack_a);
+		distance--;
+	}	
+}
+
+void	ft_reverse_rotate_down(t_stack **stack_a, int distance)
+{
+	while (distance > 0)
+	{
+		rra(stack_a);
+		distance--;
+	}
 }
