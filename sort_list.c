@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/09 13:17:00 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:49:36 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	sort_list(t_stack **stack_a, t_stack **stack_b)
 		sort_5(stack_a, stack_b);
 	else if (ft_lstsize_p(*stack_a) > 5 && ft_lstsize_p(*stack_a) < 100)
 		sort_100(stack_a, stack_b);
-	printf("hola\n");
+ 	printf("stack b\n");
+ 	ft_lstlast_p_2(*stack_b);
 	if (is_sort(*stack_a))
 		exit(0);
 }
@@ -133,7 +134,7 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b)
 	int	d_up;
 	int	d_down;
 
-	frag = 10;
+	frag = 20;
 	while (find_frag_first((*stack_a), frag) >= 0 && frag <= 100)
 	{
 		d_up = find_frag_first((*stack_a), frag);
@@ -145,24 +146,25 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b)
 		else if (d_down < d_up)
 			ft_reverse_rotate_down(stack_a, d_down, 'a');
 		put_in_stack_b(stack_a, stack_b);
-		if (*stack_a)
-		{
-			printf("stack a\n");
-			ft_lstlast_p_2(*stack_a);
-		}
-		if (*stack_b)
-		{
-			printf("stack b\n");
-			ft_lstlast_p_2(*stack_b);
-		}
+		// if (*stack_a)
+		// {
+		// 	printf("stack a\n");
+		// 	ft_lstlast_p_2(*stack_a);
+		// }
+		// if (*stack_b)
+		// {
+		// 	printf("stack b\n");
+		// 	ft_lstlast_p_2(*stack_b);
+		// }
 		if (find_frag_first((*stack_a), frag) < 0)
-			frag += 10;
+			frag += 20;
 	}
 }
 
 void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b)
 {
 	int	distance;
+	int	size_stack;
 
 	distance = 0;
 	if (!stack_b)
@@ -179,20 +181,31 @@ void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b)
 	else if (find_bigger_index((*stack_a), (*stack_b)))
 	{
 		distance = ft_get_previous((*stack_a), (*stack_b));
-		if (distance <= ft_lstsize_p(*stack_b) - distance)
+		size_stack = ft_lstsize_p(*stack_b);
+		// printf("1distance %i\n", distance);
+		// printf("1distancia por debajo %i\n", size_stack - distance);
+		if (size_stack - distance == 1)
+		{
+			pb(stack_a, stack_b);
+			rrb(stack_b);
+		}
+		else if (distance <= size_stack - distance)
 			ft_rotate_up(stack_b, distance, 'b');
-		else if (distance > ft_lstsize_p(*stack_b) - distance)
-			ft_reverse_rotate_down(stack_b,
-				ft_lstsize_p(*stack_b) - distance, 'b');
-		rb(stack_b);
-		pb(stack_a, stack_b);
-		rrb(stack_b);
+		else if (distance > size_stack - distance)
+			ft_reverse_rotate_down(stack_b,size_stack - distance, 'b');
+		if (size_stack - distance > 1)
+		{
+			printf("hola\n");
+			rb(stack_b);
+			pb(stack_a, stack_b);
+			rrb(stack_b);
+		}
 	}
 	else if (!find_bigger_index((*stack_a), (*stack_b)))
 	{
-		printf("hola\n");
 		distance = ft_get_smaller((*stack_a), (*stack_b));
-		printf("distancia %i\n", distance);
+		// printf("2distance %i\n", distance);
+		// printf("2distancia por debajo %i\n", ft_lstsize_p(*stack_b) - distance);
 		if (distance <= ft_lstsize_p(*stack_b) - distance)
 			ft_rotate_up(stack_b, distance, 'b');
 		else if (distance > ft_lstsize_p(*stack_b) - distance)
@@ -276,7 +289,7 @@ int	find_frag_first(t_stack *stack_a, int frag)
 		return (-1);
 	while (stack_a)
 	{
-		if (stack_a->index <= frag && stack_a->index >= frag - 10)
+		if (stack_a->index <= frag && stack_a->index >= frag - 20)
 			return (distance);
 		distance++;
 		stack_a = stack_a->next;
@@ -297,7 +310,7 @@ int	find_frag_second(t_stack *stack_a, int frag)
 	tmp = stack_a;
 	while (stack_a->next)
 	{
-		if (stack_a->next->index < frag && stack_a->next->index >= frag - 10)
+		if (stack_a->next->index < frag && stack_a->next->index >= frag - 20)
 		{
 			tmp = stack_a->next;
 			distance = tmp_distance + 1;
@@ -307,7 +320,7 @@ int	find_frag_second(t_stack *stack_a, int frag)
 		stack_a = stack_a->next;
 	}
 	//printf("distance- %i\n", distance);
-	if (tmp->index < frag && tmp->index >= frag - 10)
+	if (tmp->index < frag && tmp->index >= frag - 20)
 		return (size - distance + 1);
 	else
 		return (-1);
