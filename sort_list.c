@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/06 13:04:30 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/08 23:19:36 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,17 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b)
 	{
 		d_up = find_frag_first((*stack_a), frag);
 		d_down = find_frag_second((*stack_a), frag);
-		printf("first-%i\n", d_up);
-		printf("second-%i\n", d_down);
+		// printf("first-%i\n", d_up);
+		// printf("second-%i\n", d_down);
 		if (d_up <= d_down)
 			ft_rotate_up(stack_a, d_up);
 		else if (d_down < d_up)
 			ft_reverse_rotate_down(stack_a, d_down);
 		put_in_stack_b(stack_a, stack_b);
+		printf("stack a\n");
 		ft_lstlast_p_2(*stack_a);
+		printf("stack b\n");
+		ft_lstlast_p_2(*stack_b);
 		if (find_frag_first((*stack_a), frag) < 0)
 			frag += 20;
 	}
@@ -166,11 +169,12 @@ void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b)
 		pb(stack_a, stack_b);
 		sb(stack_b);
 	}
-	else if (find_bigger_index((*stack_a, (*stack_b))))
+	else if (find_bigger_index((*stack_a), (*stack_b)))
 	{
-		distance = ft_get_previous(stack_a, stack_b);
+		distance = ft_get_previous((*stack_a), (*stack_b));
+		ft_lstsize_p(*stack_b);
 	}
-	else if (!find_bigger_index((*stack_a, (*stack_b))))
+	else if (!find_bigger_index((*stack_a), (*stack_b)))
 		pb(stack_a, stack_b);
 }
 
@@ -185,7 +189,7 @@ int	find_bigger_index(t_stack *stack_a, t_stack *stack_b)
 	return (0);
 }
 
-int	ft_get_previous(t_stack **stack_a, t_stack **stack_b)
+int	ft_get_previous(t_stack *stack_a, t_stack *stack_b)
 {
 	int		distance;
 	int		tmp_distance;
@@ -193,22 +197,24 @@ int	ft_get_previous(t_stack **stack_a, t_stack **stack_b)
 
 	tmp_distance = 0;
 	min_distance = -1;
-	while (*stack_b)
+	while (stack_b)
 	{
-		if ((*stack_a)->index < (*stack_b)->index && min_distance == -1)
+		if (stack_a->index < stack_b->index && min_distance == -1)
 		{
-			min_distance = (*stack_b)->index - (*stack_a)->index;
+			min_distance = stack_b->index - stack_a->index;
 			distance = tmp_distance;
 		}
-		else if ((*stack_a)->index < (*stack_b)->index
-			&& (*stack_b)->index - (*stack_a)->index < min_distance)
+		else if (stack_a->index < stack_b->index
+			&& stack_b->index - stack_a->index < min_distance)
 		{
-			min_distance = (*stack_b)->index - (*stack_a)->index;
+			min_distance = stack_b->index - stack_a->index;
 			distance = tmp_distance;
 		}
 		tmp_distance++;
-		(*stack_b) = (*stack_b)->next;
+		stack_b = stack_b->next;
 	}
+	// printf("%i\n", distance);
+	if ()
 	return (distance);
 }
 

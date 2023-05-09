@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/06 12:46:52 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/08 12:26:37 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ int		find_frag_second(t_stack *stack_a, int frag);
 void	ft_rotate_up(t_stack **stack_a, int distance);
 void	ft_reverse_rotate_down(t_stack **stack_a, int distance);
 void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b);
-void	ft_get_previous(t_stack **stack_a, t_stack **stack_b);
+int		ft_get_previous(t_stack *stack_a, t_stack *stack_b);
 int		find_bigger_index(t_stack *stack_a, t_stack *stack_b);
 #endif
