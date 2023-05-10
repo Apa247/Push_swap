@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/10 12:22:45 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/10 23:21:14 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b)
 		if (find_frag_first((*stack_a), frag) < 0)
 			frag += 20;
 	}
+	ft_lstlast_p_2(*stack_b);
 	distance_to_max = distance_to_max_index(*stack_b);
 	if (distance_to_max == -1)
 		msg_error("Error en distance_to_max");
@@ -235,21 +236,11 @@ void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b)
 	{
 		distance = ft_get_previous((*stack_a), (*stack_b));
 		size_stack = ft_lstsize_p(*stack_b);
-		if (size_stack - distance == 1)
-		{
-			pb(stack_a, stack_b);
-			rrb(stack_b);
-		}
-		else if (distance <= size_stack - distance)
+		if (distance <= size_stack - distance)
 			ft_rotate_up(stack_b, distance, 'b');
 		else if (distance > size_stack - distance)
 			ft_reverse_rotate_down(stack_b, size_stack - distance, 'b');
-		if (size_stack - distance != 1)
-		{
-			rb(stack_b);
-			pb(stack_a, stack_b);
-			rrb(stack_b);
-		}
+		pb(stack_a, stack_b);
 	}
 	else if (!find_bigger_index((*stack_a), (*stack_b)))
 	{
