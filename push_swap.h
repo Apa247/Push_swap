@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/09 13:18:22 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/10 11:51:09 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int		find_frag_second(t_stack *stack_a, int frag);
 void	ft_rotate_up(t_stack **stack, int distance, char c);
 void	ft_reverse_rotate_down(t_stack **stack, int distance, char c);
 void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b);
+void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b, int distance);
+int		distance_to_max_index(t_stack *stack_b);
 int		ft_get_previous(t_stack *stack_a, t_stack *stack_b);
 int		find_bigger_index(t_stack *stack_a, t_stack *stack_b);
 int		ft_get_smaller(t_stack *stack_a, t_stack *stack_b);
