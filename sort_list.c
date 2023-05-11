@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
+/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/10 23:21:14 by davidaparic      ###   ########.fr       */
+/*   Updated: 2023/05/11 11:47:56 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b)
 	int	frag;
 	int	d_up;
 	int	d_down;
-	int	distance_to_max;
 
 	frag = 20;
 	while (find_frag_first((*stack_a), frag) >= 0 && frag <= 100)
@@ -147,54 +146,39 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b)
 		else if (d_down < d_up)
 			ft_reverse_rotate_down(stack_a, d_down, 'a');
 		put_in_stack_b(stack_a, stack_b);
-		// if (*stack_a)
-		// {
-		// 	printf("stack a\n");
-		// 	ft_lstlast_p_2(*stack_a);
-		// }
-		// if (*stack_b)
-		// {
-		// 	printf("stack b\n");
-		// 	ft_lstlast_p_2(*stack_b);
-		// }
 		if (find_frag_first((*stack_a), frag) < 0)
 			frag += 20;
 	}
-	ft_lstlast_p_2(*stack_b);
-	distance_to_max = distance_to_max_index(*stack_b);
-	if (distance_to_max == -1)
-		msg_error("Error en distance_to_max");
-	put_in_stack_a(stack_a, stack_b, distance_to_max);
+	put_in_stack_a(stack_a, stack_b);
 }
 
-void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b, int distance)
+void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b)
 {
 	int	size_stack;
+	int	distance;
 
-	size_stack = ft_lstsize_p(*stack_b);
-	// printf("size%i\n", size_stack);
-	if (distance <= size_stack - distance)
+	while (ft_lstsize_p(*stack_b) > 0)
 	{
-		while (distance > 1)
+		distance = distance_to_max_index(*stack_b);
+		size_stack = ft_lstsize_p(*stack_b);
+		if (distance <= size_stack - distance)
 		{
-			rb(stack_b);
-			distance--;
+			while (distance >= 1)
+			{
+				rb(stack_b);
+				distance--;
+			}
 		}
-	}
-	else if (distance > size_stack - distance)
-	{
-		while (distance > 1)
+		else if (distance > size_stack - distance)
 		{
-			rrb(stack_b);
-			distance--;
+			distance = size_stack - distance;
+			while (distance >= 1)
+			{
+				rrb(stack_b);
+				distance--;
+			}
 		}
-	}
-	// printf("stack b\n");
-	// ft_lstlast_p_2(*stack_b);
-	while (size_stack > 0)
-	{
 		pa(stack_a, stack_b);
-		size_stack--;
 	}
 }
 
