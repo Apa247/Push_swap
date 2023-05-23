@@ -6,23 +6,17 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/05 12:22:50 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:26:03 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// size_t	ft_strlen_m(const char **str)
+// void	ft_leaks()
 // {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (str[i] != '\0')
-// 	{	
-// 		i++;
-// 	}
-// 	return (i);
-// }
+// 	system("leaks -q push_swap");
+// } 
+ 	//atexit(ft_leaks);
 
 void	msg_error(char *str)
 {
@@ -55,20 +49,33 @@ void	innit_stack(t_stack **stack_a, char **list)
 		}
 		free_stack(tmp);
 	}
-	free(tmp);
 }
 
 void	free_stack(char **stack_a)
 {
+	int	i;
+
+	i = 0;
+	while (stack_a[i])
+	{
+		free(stack_a[i]);
+		i++;
+	}
+	free(stack_a);
+}
+
+void	free_stack2(t_stack **stack_a)
+{
 	while (*stack_a)
 	{
 		free(*stack_a);
-		stack_a++;
+		(*stack_a) = (*stack_a)->next;
 	}
 }
 
 void	get_index_stack(t_stack *stack_a, t_stack *new)
 {
+	new->index = 0;
 	while (stack_a->next)
 	{
 		if (stack_a->value > new->value)
@@ -88,13 +95,13 @@ int	main(int ag, char *ar[])
 		exit(1);
 	stack_a = (t_stack *)malloc(sizeof(t_stack));
 	stack_b = (t_stack *)malloc(sizeof(t_stack));
-	stack_a = NULL;
-	stack_b = NULL;
 	innit_stack(&stack_a, ar);
 	if (ft_lstsize_p(stack_a) == 1)
 		return (0);
 	if (is_sort(&(*stack_a)))
 		return (0);
 	sort_list(&stack_a, &stack_b);
+	free_stack2(&stack_a);
+	free(stack_b);
 	return (0);
 }

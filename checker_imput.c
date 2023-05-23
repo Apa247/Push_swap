@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:16:46 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/05 11:20:38 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:06:48 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_repet_nb(t_stack *list, long cmp)
 
 int	ft_check_is_number(char *str)
 {
-	if (*str == '-')
+	if (*str == '-' || *str == '+')
 		str++;
 	while (*str)
 	{
