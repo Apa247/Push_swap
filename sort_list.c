@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/23 19:11:46 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:09:10 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	sort_list(t_stack **stack_a, t_stack **stack_b)
 		sort_100(stack_a, stack_b);
 	else if (ft_lstsize_p(*stack_a) > 100)
 		sort_500(stack_a, stack_b);
-	// if (is_sort(*stack_b))
-	// 	exit(0);
 }
 
 void	sort_3(t_stack **stack_a)
@@ -142,10 +140,10 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b)
 		d_up = find_frag_first((*stack_a), frag, tmp_frag);
 		d_down = find_frag_second((*stack_a), frag, tmp_frag);
 		if (d_up <= d_down)
-			ft_rotate_up(stack_a, d_up, 'a');
+			rot_up(stack_a, stack_b, d_up, frag);
 		else if (d_down < d_up)
-			ft_reverse_rotate_down(stack_a, d_down, 'a');
-		put_in_stack_b(stack_a, stack_b);
+			rot_down(stack_a, stack_b, d_down, frag);
+		put_in_stack_b(stack_a, stack_b, frag);
 		if (find_frag_first((*stack_a), frag, tmp_frag) < 0)
 			frag += 20;
 	}
@@ -166,10 +164,10 @@ void	sort_500(t_stack **stack_a, t_stack **stack_b)
 		d_up = find_frag_first((*stack_a), frag, tmp_frag);
 		d_down = find_frag_second((*stack_a), frag, tmp_frag);
 		if (d_up <= d_down)
-			ft_rotate_up(stack_a, d_up, 'a');
+			rot_up(stack_a, stack_b, d_up, frag);
 		else if (d_down < d_up)
-			ft_reverse_rotate_down(stack_a, d_down, 'a');
-		put_in_stack_b(stack_a, stack_b);
+			rot_down(stack_a, stack_b, d_down, frag);
+		put_in_stack_b(stack_a, stack_b, frag);
 		if (find_frag_first((*stack_a), frag, tmp_frag) < 0)
 			frag += 46;
 	}
@@ -180,16 +178,21 @@ void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b)
 {
 	int	size_stack;
 	int	distance;
+	//int	distance_sec;
 
 	while (ft_lstsize_p(*stack_b) > 0)
 	{
 		distance = distance_to_max_index(*stack_b);
+		//distance_sec = distance_to_second_max(*stack_b);
 		size_stack = ft_lstsize_p(*stack_b);
 		if (distance <= size_stack - distance)
 		{
 			while (distance >= 1)
 			{
-				rb(stack_b);
+				if ((*stack_b)->index == size_stack - 1)
+					distance = 0;
+				if (distance > 0)
+					rb(stack_b);
 				distance--;
 			}
 		}
@@ -198,11 +201,21 @@ void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b)
 			distance = size_stack - distance;
 			while (distance >= 1)
 			{
-				rrb(stack_b);
+				if ((*stack_b)->index == size_stack - 1)
+					distance = 0;
+				if (distance > 0)
+					rrb(stack_b);
 				distance--;
 			}
 		}
 		pa(stack_a, stack_b);
+		if (ft_lstsize_p(*stack_a) >= 2 && ft_lstsize_p(*stack_b) >= 2
+			&& (*stack_a)->index > (*stack_a)->next->index
+			&& (*stack_b)->index < (*stack_b)->next->index)
+			ss(stack_a, stack_b);
+		if (ft_lstsize_p(*stack_a) >= 2
+			&& (*stack_a)->index > (*stack_a)->next->index)
+			sa(stack_a);
 	}
 }
 
@@ -223,36 +236,66 @@ int	distance_to_max_index(t_stack *stack_b)
 	return (-1);
 }
 
-void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b)
+// int	distance_to_second_max(t_stack *stack_b)
+// {
+// 	int	distance;
+// 	int	second_max;
+
+// 	distance = 0;
+// 	second_max = ft_lstsize_p(stack_b) - 1;
+// 	while (stack_b && second_max != 0)
+// 	{
+// 		if (stack_b->index == second_max)
+// 			return (distance);
+// 		distance++;
+// 		stack_b = stack_b->next;
+// 	}
+// 	return (-1);
+// }
+
+void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b, int frag)
 {
+	// int	size_stack;
+
 	int	distance;
-	int	size_stack;
+	int	size;
+	int	limit;
 
 	distance = 0;
-	if (!stack_b)
-		pb(stack_a, stack_b);
-	else if (!find_smaller_index((*stack_a), (*stack_b)))
-	{
-		distance = ft_get_previous((*stack_a), (*stack_b));
-		size_stack = ft_lstsize_p(*stack_b);
-		if (distance <= size_stack - distance)
-			ft_rotate_up(stack_b, distance, 'b');
-		else if (distance > size_stack - distance)
-			ft_reverse_rotate_down(stack_b, size_stack - distance, 'b');
-		pb(stack_a, stack_b);
-	}
-	else if (!find_bigger_index((*stack_a), (*stack_b)))
-	{
-		distance = ft_get_smaller((*stack_a), (*stack_b));
-		if (distance <= ft_lstsize_p(*stack_b) - distance)
-			ft_rotate_up(stack_b, distance, 'b');
-		else if (distance > ft_lstsize_p(*stack_b) - distance)
-			ft_reverse_rotate_down(stack_b,
-				ft_lstsize_p(*stack_b) - distance, 'b');
-		pb(stack_a, stack_b);
-	}
-	else
-		pb(stack_a, stack_b);
+	limit = 0;
+	size = ft_lstsize_p(*stack_a) + ft_lstsize_p(*stack_b);
+	if (size > 5 && size < 500)
+		limit = 10;
+	else if (size >= 500)
+		limit = 23;
+	pb(stack_a, stack_b);
+	if (ft_lstsize_p(*stack_b) >= 2 && ft_lstsize_p(*stack_a) >= 2
+		&& (*stack_b)->index < frag - limit && (*stack_a)->index > frag)
+		rr(stack_a, stack_b);
+	if (ft_lstsize_p(*stack_b) >= 2 && (*stack_b)->index < frag - limit)
+		rb(stack_b);
+	// else if (!find_smaller_index((*stack_a), (*stack_b)))
+	// {
+	// 	distance = ft_get_previous((*stack_a), (*stack_b));
+	// 	size_stack = ft_lstsize_p(*stack_b);
+	// 	if (distance <= size_stack - distance)
+	// 		ft_rotate_up(stack_b, distance, 'b');
+	// 	else if (distance > size_stack - distance)
+	// 		ft_reverse_rotate_down(stack_b, size_stack - distance, 'b');
+	// 	pb(stack_a, stack_b);
+	// }
+	// else if (!find_bigger_index((*stack_a), (*stack_b)))
+	// {
+	// 	distance = ft_get_smaller((*stack_a), (*stack_b));
+	// 	if (distance <= ft_lstsize_p(*stack_b) - distance)
+	// 		ft_rotate_up(stack_b, distance, 'b');
+	// 	else if (distance > ft_lstsize_p(*stack_b) - distance)
+	// 		ft_reverse_rotate_down(stack_b,
+	// 			ft_lstsize_p(*stack_b) - distance, 'b');
+	// 	pb(stack_a, stack_b);
+	// }
+	// else
+	// 	pb(stack_a, stack_b);
 }
 
 int	ft_get_smaller(t_stack *stack_a, t_stack *stack_b)
@@ -376,30 +419,58 @@ int	find_frag_second(t_stack *stack_a, int frag, int tmp_frag)
 		return (-1);
 }
 
-void	ft_rotate_up(t_stack **stack, int distance, char c)
+void	rot_up(t_stack **stack_a, t_stack **stack_b, int distance, int frag)
 {
-	while (distance > 0 && c == 'a')
+	int	size;
+	int	limit;
+
+	limit = 0;
+	size = ft_lstsize_p(*stack_a) + ft_lstsize_p(*stack_b);
+	if (size > 5 && size < 500)
+		limit = 10;
+	else if (size >= 500)
+		limit = 23;
+	while (distance > 0)
 	{
-		ra(stack);
-		distance--;
-	}
-	while (distance > 0 && c == 'b')
-	{
-		rb(stack);
+		if (ft_lstsize_p(*stack_b) >= 2 && (*stack_b)->index < frag - limit)
+			rr(stack_a, stack_b);
+		else
+			ra(stack_a);
 		distance--;
 	}
 }
 
-void	ft_reverse_rotate_down(t_stack **stack, int distance, char c)
+void	rot_down(t_stack **stack_a, t_stack **stack_b, int distance, int frag)
 {
-	while (distance > 0 && c == 'a')
+	int	size;
+	int	limit;
+
+	limit = 0;
+	size = ft_lstsize_p(*stack_a) + ft_lstsize_p(*stack_b);
+	if (size > 5 && size < 500)
+		limit = 10;
+	else if (size >= 500)
+		limit = 23;
+	while (distance > 0)
 	{
-		rra(stack);
+		if (ft_lstsize_p(*stack_b) >= 2 && (*stack_b)->index < frag - limit)
+			rrr(stack_a, stack_b);
+		else
+			rra(stack_a);
 		distance--;
 	}
-	while (distance > 0 && c == 'b')
+}
+
+void	rotate_b(t_stack **stack_b, int distance, char c)
+{
+	while (distance > 0 && c == 'u')
 	{
-		rrb(stack);
+		rb(stack_b);
+		distance--;
+	}
+	while (distance > 0 && c == 'd')
+	{
+		rrb(stack_b);
 		distance--;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/23 19:26:03 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:09:34 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	free_stack2(t_stack **stack_a)
 
 void	get_index_stack(t_stack *stack_a, t_stack *new)
 {
-	new->index = 0;
 	while (stack_a->next)
 	{
 		if (stack_a->value > new->value)
@@ -95,12 +94,18 @@ int	main(int ag, char *ar[])
 		exit(1);
 	stack_a = (t_stack *)malloc(sizeof(t_stack));
 	stack_b = (t_stack *)malloc(sizeof(t_stack));
+	
+	// stack_a = NULL;
+	// stack_b = NULL;
+	stack_a = stack_a->next;
+	stack_b = stack_b->next;
 	innit_stack(&stack_a, ar);
 	if (ft_lstsize_p(stack_a) == 1)
 		return (0);
 	if (is_sort(&(*stack_a)))
 		return (0);
 	sort_list(&stack_a, &stack_b);
+	//ft_lstlast_p_2(stack_a);
 	free_stack2(&stack_a);
 	free(stack_b);
 	return (0);

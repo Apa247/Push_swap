@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/23 15:21:21 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:31:38 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,10 @@ void	sort_100(t_stack **stack_a, t_stack **stack_b);
 void	sort_500(t_stack **stack_a, t_stack **stack_b);
 int		find_frag_first(t_stack *stack_a, int frag, int tmp_frag);
 int		find_frag_second(t_stack *stack_a, int frag, int tmp_frag);
-void	ft_rotate_up(t_stack **stack, int distance, char c);
-void	ft_reverse_rotate_down(t_stack **stack, int distance, char c);
-void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b);
+void	rot_up(t_stack **stack_a, t_stack **stack_b, int distance, int frag);
+void	rot_down(t_stack **stack_a, t_stack **stack_b, int distance, int frag);
+void	rotate_b(t_stack **stack_b, int distance, char c);
+void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b, int frag);
 void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b);
 int		distance_to_max_index(t_stack *stack_b);
 int		ft_get_previous(t_stack *stack_a, t_stack *stack_b);
