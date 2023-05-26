@@ -6,7 +6,7 @@
 /*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:37 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/24 18:09:10 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:32:16 by daparici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,42 +178,44 @@ void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b)
 {
 	int	size_stack;
 	int	distance;
-	//int	distance_sec;
+	int	flag;
+	int	d_tmp;
 
 	while (ft_lstsize_p(*stack_b) > 0)
 	{
 		distance = distance_to_max_index(*stack_b);
-		//distance_sec = distance_to_second_max(*stack_b);
 		size_stack = ft_lstsize_p(*stack_b);
-		if (distance <= size_stack - distance)
-		{
-			while (distance >= 1)
-			{
-				if ((*stack_b)->index == size_stack - 1)
-					distance = 0;
-				if (distance > 0)
-					rb(stack_b);
-				distance--;
-			}
-		}
-		else if (distance > size_stack - distance)
-		{
+		d_tmp = distance;
+		if (distance > size_stack - distance)
 			distance = size_stack - distance;
-			while (distance >= 1)
+		while (distance > 0)
+		{
+			if (size_stack > 1)
 			{
-				if ((*stack_b)->index == size_stack - 1)
+				if (size_stack >= 2 && (*stack_b)->index == size_stack - 1
+					&& flag == 0)
+				{
+					pa(stack_a, stack_b);
 					distance = 0;
-				if (distance > 0)
+					flag = 1;
+				}
+				if (d_tmp > size_stack / 2)
 					rrb(stack_b);
-				distance--;
+				else
+					rb(stack_b);
 			}
+			distance--;
 		}
-		pa(stack_a, stack_b);
+		if (distance == 0)
+		{
+			pa(stack_a, stack_b);
+			flag = 0;
+		}
 		if (ft_lstsize_p(*stack_a) >= 2 && ft_lstsize_p(*stack_b) >= 2
 			&& (*stack_a)->index > (*stack_a)->next->index
 			&& (*stack_b)->index < (*stack_b)->next->index)
 			ss(stack_a, stack_b);
-		if (ft_lstsize_p(*stack_a) >= 2
+		else if (ft_lstsize_p(*stack_a) >= 2
 			&& (*stack_a)->index > (*stack_a)->next->index)
 			sa(stack_a);
 	}
@@ -222,41 +224,27 @@ void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b)
 int	distance_to_max_index(t_stack *stack_b)
 {
 	int	distance;
-	int	max_index;
+	int	d_tmp;
+	int	size_s;
 
+	size_s = stack_b->index;
+	d_tmp = 0;
 	distance = 0;
-	max_index = ft_lstsize_p(stack_b);
 	while (stack_b)
 	{
-		if (stack_b->index == max_index)
-			return (distance);
-		distance++;
+		if (stack_b->index > size_s)
+		{
+			size_s = stack_b->index;
+			distance = d_tmp;
+		}
+		d_tmp++;
 		stack_b = stack_b->next;
 	}
-	return (-1);
+	return (distance);
 }
-
-// int	distance_to_second_max(t_stack *stack_b)
-// {
-// 	int	distance;
-// 	int	second_max;
-
-// 	distance = 0;
-// 	second_max = ft_lstsize_p(stack_b) - 1;
-// 	while (stack_b && second_max != 0)
-// 	{
-// 		if (stack_b->index == second_max)
-// 			return (distance);
-// 		distance++;
-// 		stack_b = stack_b->next;
-// 	}
-// 	return (-1);
-// }
 
 void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b, int frag)
 {
-	// int	size_stack;
-
 	int	distance;
 	int	size;
 	int	limit;
@@ -274,28 +262,6 @@ void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b, int frag)
 		rr(stack_a, stack_b);
 	if (ft_lstsize_p(*stack_b) >= 2 && (*stack_b)->index < frag - limit)
 		rb(stack_b);
-	// else if (!find_smaller_index((*stack_a), (*stack_b)))
-	// {
-	// 	distance = ft_get_previous((*stack_a), (*stack_b));
-	// 	size_stack = ft_lstsize_p(*stack_b);
-	// 	if (distance <= size_stack - distance)
-	// 		ft_rotate_up(stack_b, distance, 'b');
-	// 	else if (distance > size_stack - distance)
-	// 		ft_reverse_rotate_down(stack_b, size_stack - distance, 'b');
-	// 	pb(stack_a, stack_b);
-	// }
-	// else if (!find_bigger_index((*stack_a), (*stack_b)))
-	// {
-	// 	distance = ft_get_smaller((*stack_a), (*stack_b));
-	// 	if (distance <= ft_lstsize_p(*stack_b) - distance)
-	// 		ft_rotate_up(stack_b, distance, 'b');
-	// 	else if (distance > ft_lstsize_p(*stack_b) - distance)
-	// 		ft_reverse_rotate_down(stack_b,
-	// 			ft_lstsize_p(*stack_b) - distance, 'b');
-	// 	pb(stack_a, stack_b);
-	// }
-	// else
-	// 	pb(stack_a, stack_b);
 }
 
 int	ft_get_smaller(t_stack *stack_a, t_stack *stack_b)
