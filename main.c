@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:28:01 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/24 18:09:34 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/27 21:35:49 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@
 // {
 // 	system("leaks -q push_swap");
 // } 
- 	//atexit(ft_leaks);
+//  atexit(ft_leaks);
 
-void	msg_error(char *str)
-{
-	perror(str);
-	exit (1);
-}
 
 void	innit_stack(t_stack **stack_a, char **list)
 {
@@ -64,13 +59,17 @@ void	free_stack(char **stack_a)
 	free(stack_a);
 }
 
-void	free_stack2(t_stack **stack_a)
-{
+void	free_stack2(t_stack **stack_a, t_stack *stack_a_2,
+			t_stack *stack_b_2)
+{	
 	while (*stack_a)
 	{
 		free(*stack_a);
 		(*stack_a) = (*stack_a)->next;
 	}
+	free(stack_a_2);
+	free(stack_b_2);
+	
 }
 
 void	get_index_stack(t_stack *stack_a, t_stack *new)
@@ -89,24 +88,24 @@ int	main(int ag, char *ar[])
 {
 	t_stack	*stack_a;
 	t_stack	*stack_b;
+	t_stack *stack_a_2;
+	t_stack	*stack_b_2;
 
 	if (ag <= 1)
 		exit(1);
 	stack_a = (t_stack *)malloc(sizeof(t_stack));
 	stack_b = (t_stack *)malloc(sizeof(t_stack));
-	
-	// stack_a = NULL;
-	// stack_b = NULL;
+	stack_a_2 = stack_a;
+	stack_b_2 = stack_b;
 	stack_a = stack_a->next;
 	stack_b = stack_b->next;
 	innit_stack(&stack_a, ar);
-	if (ft_lstsize_p(stack_a) == 1)
+	if (ft_lstsize_p(stack_a) == 1 || is_sort(&(*stack_a)))
+	{
+		free_stack2(&stack_a, stack_a_2, stack_b_2);
 		return (0);
-	if (is_sort(&(*stack_a)))
-		return (0);
+	}
 	sort_list(&stack_a, &stack_b);
-	//ft_lstlast_p_2(stack_a);
-	free_stack2(&stack_a);
-	free(stack_b);
+	free_stack2(&stack_a, stack_a_2, stack_b_2);
 	return (0);
 }

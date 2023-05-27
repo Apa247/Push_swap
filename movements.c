@@ -3,101 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:19:19 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/15 18:52:14 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/27 21:27:45 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	swap(t_stack **stack)
-{
-	t_stack	*first;
-	t_stack	*second;
-	int		tmp_value;
-	int		tmp_index;
-
-	first = (*stack);
-	second = first->next;
-	tmp_value = first->value;
-	tmp_index = first->index;
-	first->value = second->value;
-	first->index = second->index;
-	second->value = tmp_value;
-	second->index = tmp_index;
-}
-
-void	sa(t_stack **stack_a)
-{
-	swap(stack_a);
-	ft_putendl_fd("sa", 1);
-}
-
-void	sb(t_stack **stack_b)
-{
-	swap(stack_b);
-	ft_putendl_fd("sb", 1);
-}
-
-void	ss(t_stack **stack_a, t_stack **stack_b)
-{
-	swap(stack_a);
-	swap(stack_b);
-	ft_putendl_fd("ss", 1);
-}
-
-void	push(t_stack **stack_from, t_stack **stack_to)
-{
-	t_stack	*tmp;
-
-	tmp = (*stack_from);
-	(*stack_from) = (*stack_from)->next;
-	if (!(*stack_to))
-	{
-		(*stack_to) = tmp;
-		tmp->next = NULL;
-	}
-	else
-	{
-		tmp->next = (*stack_to);
-		(*stack_to) = tmp;
-	}
-}
-
-void	pa(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_b, stack_a);
-	ft_putendl_fd("pa", 1);
-}
-
-void	pb(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_a, stack_b);
-	ft_putendl_fd("pb", 1);
-}
-
-void	rotate(t_stack **stack)
-{
-	t_stack	*old_first;
-
-	old_first = (*stack);
-	*stack = (*stack)->next;
-	ft_lstadd_back_p(stack, old_first);
-}
-
-void	ra(t_stack **stack_a)
-{
-	rotate(stack_a);
-	ft_putendl_fd("ra", 1);
-}
-
-void	rb(t_stack **stack_b)
-{
-	rotate(stack_b);
-	ft_putendl_fd("rb", 1);
-}
 
 void	rr(t_stack **stack_a, t_stack **stack_b)
 {

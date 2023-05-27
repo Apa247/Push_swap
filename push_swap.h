@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daparici <daparici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidaparicio <davidaparicio@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:45:41 by daparici          #+#    #+#             */
-/*   Updated: 2023/05/26 18:26:07 by daparici         ###   ########.fr       */
+/*   Updated: 2023/05/27 18:40:30 by davidaparic      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ typedef struct s_stack
 	struct s_stack	*next;
 }				t_stack;
 
-size_t	ft_strlen_m(const char **str);
-
 int		main(int ag, char **ar);
 void	innit_stack(t_stack **stack_a, char **s_list);
 int		ft_check_is_number(char *str);
@@ -41,6 +39,7 @@ int		ft_check_arg(char **tmp, int k);
 void	ft_check_list(char **list, size_t i);
 void	ft_repet_nb(t_stack *list, long cmp);
 void	get_index_stack(t_stack *stack_a, t_stack *new);
+
 // funciones de movimientos
 void	swap(t_stack **stack);
 void	rotate(t_stack **stack);
@@ -65,12 +64,12 @@ void	rrr(t_stack **stack_a, t_stack **stack_b);
 // funciones utiles de libft
 t_stack	*ft_lstnew_p(int content);
 int		ft_lstsize_p(t_stack *lst);
-// int		ft_lstsize_p_2(t_stack **lst);
 void	ft_lstadd_back_p(t_stack **lst, t_stack *new);
 t_stack	*ft_lstlast_p(t_stack *lst);
 void	ft_lstlast_p_2(t_stack *lst);
 t_stack	*ft_lstpenultimate(t_stack *lst);
 int		ft_atoi_p(char *str);
+
 // funcion de error
 void	msg_error(char *str);
 void	free_stack(char **stack_a);
@@ -85,15 +84,9 @@ void	sort_5(t_stack **stack_a, t_stack **stack_b);
 void	sort_100(t_stack **stack_a, t_stack **stack_b);
 void	sort_500(t_stack **stack_a, t_stack **stack_b);
 int		find_frag_first(t_stack *stack_a, int frag, int tmp_frag);
-int		find_frag_second(t_stack *stack_a, int frag, int tmp_frag);
 void	rot_up(t_stack **stack_a, t_stack **stack_b, int distance, int frag);
-void	rot_down(t_stack **stack_a, t_stack **stack_b, int distance, int frag);
 void	rotate_b(t_stack **stack_b, int distance, char c);
 void	put_in_stack_b(t_stack **stack_a, t_stack **stack_b, int frag);
 void	put_in_stack_a(t_stack **stack_a, t_stack **stack_b);
 int		distance_to_max_index(t_stack *stack_b);
-int		ft_get_previous(t_stack *stack_a, t_stack *stack_b);
-int		find_bigger_index(t_stack *stack_a, t_stack *stack_b);
-int		find_smaller_index(t_stack *stack_a, t_stack *stack_b);
-int		ft_get_smaller(t_stack *stack_a, t_stack *stack_b);
 #endif
